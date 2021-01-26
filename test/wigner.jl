@@ -1,4 +1,4 @@
-@testset "Wigner" begin
+@testset "laguerre" begin
     tol = 1e-14
 
     x = 5
@@ -21,5 +21,14 @@
         ((α + 1) * (α + 2) * (α + 3)) / 6,
         atol=tol
     )
+end
+
+@testset "factorial_ij" begin
+    i = 3
+    j = 9
+    @test SqState.factorial_ij(i, j) == factorial(j) / factorial(i-1)
+end
+
+@testset "wigner" begin
 
 end
