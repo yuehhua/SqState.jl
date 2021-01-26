@@ -1,8 +1,8 @@
 @testset "laguerre" begin
-    tol = 1e-14
+    tol = 1e-13
 
     x = 5
-    α = 0.5
+    α = 3
     @test isapprox(laguerre(0, α)(x), 1, atol=tol)
     @test isapprox(
         laguerre(1, α)(x), -x + α + 1, atol=tol)
