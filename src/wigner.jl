@@ -4,6 +4,10 @@ export
     wigner,
     gen_wigner
 
+#=
+    Wigner function by Laguerre Polynominal
+=#
+
 function laguerre(n::Integer, α::Integer, x::Real)
     # by Horner's method
     laguerre_l = 1
@@ -38,6 +42,13 @@ function wigner(m, n, x, p)
 end
 
 wigner(w_argv::Tuple) = ComplexF64(wigner(w_argv...))
+
+#=
+    Wigner function by Fourier transform
+=#
+
+function wigner(x, p)
+end
 
 struct W
     ρ_size::Int64
