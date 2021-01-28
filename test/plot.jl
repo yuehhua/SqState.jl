@@ -20,11 +20,12 @@ end
 
 function main()
     @info "Initialising"
+    t = time()
     ρ = read_ρ()
     x_range = -5:0.1:5
     p_range = -3:0.1:3
     w = W(x_range, p_range)
-    @info "Done"
+    @info "Done, took $(time() - t)(s)"
 
     t = time()
     wig = wigner(ρ, w)
@@ -35,7 +36,7 @@ function main()
         yticks=[],
         c=:bluesreds
     )
-    print(time() - t)
+    @info "Render time: $(time() - t)(s)"
 
     return p
 end
