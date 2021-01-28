@@ -1,6 +1,7 @@
 using SqState
 using HDF5
 using Plots
+plotly()
 
 const SCRIPT_PATH = @__DIR__
 
@@ -20,10 +21,23 @@ end
 function main()
     @info "Initialising"
     ρ = read_ρ()
-    w = W(-5:0.1:5, -3:0.1:3)
+    x_range = -5:0.1:5
+    p_range = -3:0.1:3
+    w = W(x_range, p_range)
     @info "Done"
 
+    t = time()
     wig = wigner(ρ, w)
+    p = heatmap(
+        wig,
+        title="Wigner Function",
+        xticks=[],
+        yticks=[],
+        c=:bluesreds
+    )
+    print(time() - t)
+
+    return p
 end
 
 main()

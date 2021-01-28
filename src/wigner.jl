@@ -30,7 +30,7 @@ function wigner(m, n, x, p)
     w = 1 / pi
     w *= exp(-(x^2 + p^2))
     w *= (-1)^m
-    w *= sqrt(2^(n-m) / factorial_ij(m+1, n))
+    w *= sqrt(2^(n-m) * factorial_ij(m, n))
     w *= (x - p*imag)^(n-m)
     w *= laguerre(m, n-m)(2x^2 + 2p^2)
 
