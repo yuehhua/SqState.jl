@@ -14,18 +14,16 @@ function read_ρ()
         read(file, "sq4/imag")
     end
 
-    return complex.(ρ_real, ρ_imag)
+    return complex.(ρ_real, -ρ_imag)
 end
 
 function main()
+    @info "Initialising"
     ρ = read_ρ()
+    w = W(-5:0.1:5, -3:0.1:3)
+    @info "Done"
 
-    x = collect(-5:0.1:5)
-    p = collect(-5:0.1:5)
-    # x = -3
-    # p = 5
-
-    W = gen_wigner(ρ).(x, p')
+    wig = wigner(ρ, w)
 end
 
 main()

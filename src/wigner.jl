@@ -1,4 +1,5 @@
 export
+    W,
     laguerre,
     wigner,
     gen_wigner
@@ -17,15 +18,7 @@ end
 
 laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
 
-function factorial_ij(i::Integer, j::Integer)
-    ans = BigInt(i)
-    while i < j
-        i += 1
-        ans *= i
-    end
-
-    return ans
-end
+factorial_ij(i::Integer, j::Integer) = factorial(big(min(i,j))) / factorial(big(max(i,j)))
 
 function wigner(m, n, x, p)
     imag = 1im
@@ -44,22 +37,29 @@ function wigner(m, n, x, p)
     return w
 end
 
-wigner(m, n) = (x, p)->wigner(m, n, x, p)
+wigner(w_argv::Tuple) = ComplexF64(wigner(w_argv...))
 
-function wigner(m::Vector{<:Integer}, n::Vector{<:Integer}, x::Real, p::Real)
-    n = n'
-    α = n .- m
-    imag = sign.(α) .* im
-    α .= abs.(α)
-    M = min.(m, n)
-    N = max.(m, n)
-
-    W = (-1).^M / π * exp(-(x^2 + p^2))
-    W = complex.(W .* sqrt.((2).^α ./ factorial_ij.(M.+1, N)))
-    W .*= (x .- p*imag).^α
-    W .*= laguerre.(M, α, 2*x^2 + 2*p^2)
-
-    return W
+struct W
+    ρ_size::Int64
+    mn::Array{ComplexF64, 4}
 end
 
-gen_wigner(ρ) = (x, p) -> sum(ρ .* wigner(collect(1:size(ρ,1)), collect(1:size(ρ,2)), x, p))
+function W(x_range::StepRangeLen, p_range::StepRangeLen; ρ_size=35)
+    meshgrid = Tuple[]
+    for n in 1:ρ_size
+        for m in 1:ρ_size
+            for x in x_range
+                for p in p_range
+                    push!(meshgrid, (m, n, x, p))
+                end
+            end
+        end
+    end
+    mn = reshape(wigner.(meshgrid), ρ_size, ρ_size, length(x_range), length(p_range))
+
+    return W(ρ_size, mn)
+end
+
+function wigner(ρ, w::W)
+    reshape(real(sum(ρ .* w.mn, dims=(1, 2))), size(w.mn)[3], size(w.mn)[4])
+end

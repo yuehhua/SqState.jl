@@ -25,8 +25,9 @@ end
 
 @testset "factorial_ij" begin
     i = 3
-    j = 9
-    @test SqState.factorial_ij(i, j) == factorial(j) / factorial(i-1)
+    j = 40
+    @test SqState.factorial_ij(i, j) == factorial(big(i)) / factorial(big(j))
+    @test SqState.factorial_ij(j, i) == factorial(big(i)) / factorial(big(j))
 end
 
 @testset "wigner" begin
