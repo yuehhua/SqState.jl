@@ -15,7 +15,9 @@ function read_ρ()
         read(file, "sq4/imag")
     end
 
-    return complex.(ρ_real, -ρ_imag)
+    ρ = complex.(ρ_real, ρ_imag)'
+
+    return ρ
 end
 
 function main()
@@ -23,7 +25,7 @@ function main()
     t = time()
     ρ = read_ρ()
     x_range = -5:0.1:5
-    p_range = -3:0.1:3
+    p_range = -5:0.1:5
     w = W(x_range, p_range)
     @info "Done, took $(time() - t)(s)"
 
@@ -34,7 +36,8 @@ function main()
         title="Wigner Function",
         xticks=[],
         yticks=[],
-        c=:bluesreds
+        c=:bluesreds,
+        size=(1200, 1100)
     )
     @info "Render time: $(time() - t)(s)"
 

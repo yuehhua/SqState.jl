@@ -57,16 +57,16 @@ end
 
 function W(x_range::StepRangeLen, p_range::StepRangeLen; ρ_size=35)
     meshgrid = Tuple[]
-    for n in 1:ρ_size
-        for m in 1:ρ_size
-            for x in x_range
-                for p in p_range
+    for x in x_range
+        for p in p_range
+            for m in 1:ρ_size
+                for n in 1:ρ_size
                     push!(meshgrid, (m, n, x, p))
                 end
             end
         end
     end
-    mn = reshape(wigner.(meshgrid), ρ_size, ρ_size, length(x_range), length(p_range))
+    mn = reshape(wigner.(meshgrid), ρ_size, ρ_size, length(p_range), length(x_range))
 
     return W(ρ_size, mn)
 end
