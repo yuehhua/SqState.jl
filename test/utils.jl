@@ -19,5 +19,13 @@ end
 end
 
 @testset "α" begin
+    m_range = n_range = 1:35
 
+    for m in m_range, n in m:n_range.stop
+        @test SqState.α(m, n) == max(m, n) - min(m, n)
+    end
+
+    ms = collect(m_range)
+    ns = collect(n_range)
+    @test SqState.α(ms, ns) == max.(ms, ns') .- min.(ms, ns')
 end
