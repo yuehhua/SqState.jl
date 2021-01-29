@@ -1,6 +1,3 @@
-export
-    factorial_ij
-
 factorial_ij(i::Integer, j::Integer) = factorial(big(min(i,j))) / factorial(big(max(i,j)))
 
 z(x::Real, p::Real) = sqrt(2.)*(x + p*im)
