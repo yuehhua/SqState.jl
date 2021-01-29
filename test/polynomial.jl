@@ -30,10 +30,3 @@ end
         @test isapprox(laguerre(0, α)(x), laguerre_horner(0, α)(x), atol=tol)
     end
 end
-
-@testset "factorial_ij" begin
-    i = 3
-    j = 40
-    @test SqState.factorial_ij(i, j) == factorial(big(i)) / factorial(big(j))
-    @test SqState.factorial_ij(j, i) == factorial(big(i)) / factorial(big(j))
-end
