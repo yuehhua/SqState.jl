@@ -11,7 +11,7 @@ using HDF5
     h5write(file_name, "$data_name/imag", arr_imag)
 
     # the transpose is due to the col-majer and row-majer difference between python and julia
-    @test isequal(read_ρ(file_name, data_name), complex.(arr_real', arr_imag'))
+    @test read_ρ(file_name, data_name) == complex.(arr_real', arr_imag')
 
     rm(file_name)
 end
