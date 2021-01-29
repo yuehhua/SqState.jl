@@ -1,28 +1,10 @@
 export
     W,
-    laguerre,
-    wigner,
-    gen_wigner
+    wigner
 
 #=
     Wigner function by Laguerre Polynominal
 =#
-
-function laguerre(n::Integer, α::Integer, x::Real)
-    # by Horner's method
-    laguerre_l = 1
-    bin = 1
-    for i in n:-1:1
-        bin *= (α + i) / (n + 1 - i)
-        laguerre_l = bin - x * laguerre_l / i
-    end
-
-    return laguerre_l
-end
-
-laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
-
-factorial_ij(i::Integer, j::Integer) = factorial(big(min(i,j))) / factorial(big(max(i,j)))
 
 function wigner(m, n, x, p)
     imag = 1im
