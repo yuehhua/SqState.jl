@@ -73,3 +73,26 @@ end
     ns = collect(n_range)
     @test SqState.coefficient_of_wave_function(ms, ns) == SqState.coefficient_of_wave_function.(ms, ns')
 end
+
+@testset "z_to_power" begin
+    tol = 1e-14
+
+    m_range = n_range = 1:35
+    x_range = -1:0.1:1
+    p_range = -0.6:0.1:0.6
+
+    for m in m_range, n in n_range, x in x_range, p in p_range
+        z = (n >= m) ? sqrt(2.)*(x - p*im) : sqrt(2.)*(x + p*im)
+        @test SqState.z_to_power(m, n, x, p) == z^(max(m, n) - min(m, n))
+    end
+
+    ms = collect(m_range)
+    ns = collect(n_range)
+    xs = collect(x_range)
+    ps = collect(p_range)
+    xs_ = reshape(collect(x_range), 1, 1, length(x_range))
+    ps_ = reshape(collect(p_range), 1, 1, 1, length(p_range))
+    @test SqState.z_to_power(ms, ns, xs, ps) == SqState.z_to_power.(ms, ns', xs_, ps_)
+    @test SqState.z_to_power(ms, ns)(xs, ps) == SqState.z_to_power.(ms, ns', xs_, ps_)
+    @test SqState.z_to_power(xs, ps)(ms, ns) == SqState.z_to_power.(ms, ns', xs_, ps_)
+end
