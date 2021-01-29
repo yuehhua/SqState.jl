@@ -54,3 +54,22 @@ end
         @test SqState.neg_one_to_power_of(i) == (-1)^i
     end
 end
+
+@testset "coefficient_of_wave_function" begin
+    tol = 1e-14
+
+    m_range = n_range = 1:35
+
+    for m in m_range, n in n_range
+        m1 = (n ≥ m) ? (-1)^m : (-1)^n
+        @test isapprox(
+            SqState.coefficient_of_wave_function(m, n),
+            m1 * sqrt(factorial(big(min(m, n))) / factorial(big(max(m, n)))),
+            atol=tol
+        )
+    end
+
+    ms = collect(m_range)
+    ns = collect(n_range)
+    @test SqState.coefficient_of_wave_function(ms, ns) == SqState.coefficient_of_wave_function.(ms, ns')
+end
