@@ -1,13 +1,10 @@
-export
-    factorial_ij
-
 factorial_ij(i::Integer, j::Integer) = factorial(big(min(i,j))) / factorial(big(max(i,j)))
 
 z(x::Real, p::Real) = sqrt(2.)*(x + p*im)
 z(x::Vector{<:Real}, p::Vector{<:Real}) = z.(x, p')
 
 α(m::Integer, n::Integer) = n - m
-α(m::Vector{<:Integer}, n::Vector{<:Integer}) = α.(max.(m, n'), min.(m, n'))
+α(m::Vector{<:Integer}, n::Vector{<:Integer}) = α.(min.(m, n'), max.(m, n'))
 
 gaussian_function(x::Real, p::Real) = exp(-0.5 * abs2(z(x,p))) / π
 gaussian_function(x::Vector{<:Real}, p::Vector{<:Real}) = gaussian_function.(x,p')
