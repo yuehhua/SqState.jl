@@ -19,13 +19,23 @@ function main()
 
     start_time = time()
     wig = w(ρ)
+    lim = maximum(abs.(wig))
     p = heatmap(
+        x_range,
+        p_range,
         wig,
         title="Wigner Function",
-        xticks=[],
-        yticks=[],
-        c=:bluesreds,
-        size=(1200, 1100)
+        xlabel="X",
+        ylabel="P",
+        # xticks=x_range,
+        # yticks=p_range,
+        clim=(-lim, lim),
+        c=cgrad([
+            RGBA(53/255, 157/255, 219/255, 1),
+            RGBA(240/255, 240/255, 240/255, 1),
+            RGBA(219/255, 64/255, 68/255, 1)]
+        ),
+        size=(900, 825)
     )
     end_time = time()
     @info "Render time: $(end_time - start_time)(s)"
