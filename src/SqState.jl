@@ -1,10 +1,10 @@
 module SqState
 
-    export
-        read_ρ
+    const PROJECT_PATH = @__DIR__
 
     include("read.jl")
     include("utils.jl")
+    include("polynomial.jl")
     include("wigner.jl")
 
 end

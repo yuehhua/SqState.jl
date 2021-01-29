@@ -1,18 +1,34 @@
 using SqState
-using HDF5
 using Plots
-
-const SCRIPT_PATH = @__DIR__
+plotly()
 
 function main()
-    data_path = joinpath(SCRIPT_PATH, "../data", "dm.h5")
-    ρ = read_ρ(data_path)
+    @info "Initialising"
+    t = time()
 
-    x = collect(-5:0.1:5)
-    p = collect(-5:0.1:5)
-    wf = SqState.WignerFunction(ρ)
+    data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
+    data_name = "sq4"
+    ρ = read_ρ(data_path, data_name)
 
-    W = wf(x, p)
+    x_range = -5:1.0:5
+    p_range = -5:1.0:5
+    w = W(x_range, p_range)
+
+    @info "Done, took $(time() - t)(s)"
+
+    t = time()
+    wig = wigner(ρ, w)
+    p = heatmap(
+        wig,
+        title="Wigner Function",
+        xticks=[],
+        yticks=[],
+        c=:bluesreds,
+        size=(1200, 1100)
+    )
+    @info "Render time: $(time() - t)(s)"
+
+    return p
 end
 
 main()

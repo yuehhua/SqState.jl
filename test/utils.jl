@@ -26,5 +26,5 @@ end
 @testset "factorial_ij" begin
     i = 3
     j = 9
-    @test SqState.factorial_ij(i, j) == factorial(j) / factorial(i)
+    @test factorial_ij(i, j) ≈ factorial(i) / factorial(j)
 end
