@@ -24,9 +24,11 @@
 end
 
 @testset "laguerre" begin
-    tol = 1e-14
-
-    for i in 0:50, α in 0:50, x in 0:0.1:10
-        @test isapprox(laguerre(0, α)(x), laguerre_horner(0, α)(x), atol=tol)
+    for n in 0:5, α in 0:5, x in 0:0.1:10
+        # the precision of Horner's method is pretty bad when n is large
+        thm_val = laguerre(n, α)(x)
+        test_val = laguerre_horner(n, α)(x)
+        isapprox(thm_val, 0) && continue
+        @test abs(test_val - thm_val)/abs(thm_val) < 1e-11
     end
 end
