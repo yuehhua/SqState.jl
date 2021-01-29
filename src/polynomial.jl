@@ -1,6 +1,6 @@
 export
-    laguerre,
-    laguerre2
+    laguerre_horner,
+    laguerre
 
 function laguerre_horner(n::Integer, α::Integer, x::Real)
     # by Horner's method

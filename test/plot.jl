@@ -9,9 +9,9 @@ function main()
     data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
     data_name = "sq4"
     ρ = read_ρ(data_path, data_name)
-    
-    x_range = -5:0.1:5
-    p_range = -5:0.1:5
+
+    x_range = -5:1.0:5
+    p_range = -5:1.0:5
     w = W(x_range, p_range)
 
     @info "Done, took $(time() - t)(s)"
