@@ -20,8 +20,8 @@ wigner(m::Integer, n::Integer) = (x, p)->wigner(m, n, x, p)
 mutable struct WignerFunction{T<:Integer}
     m_dim::T
     n_dim::T
-    x
-    p
+    xs
+    ps
     W::Array{ComplexF64,4}
 
     function WignerFunction(m_dim::T, n_dim::T, xs, ps) where {T<:Integer}
@@ -33,7 +33,7 @@ mutable struct WignerFunction{T<:Integer}
         else
             W = Array{ComplexF64,4}(undef, 0, 0, 0, 0)
         end
-        new{T}(m_dim, n_dim, x, p, W)
+        new{T}(m_dim, n_dim, xs, ps, W)
     end
 end
 
@@ -41,16 +41,16 @@ function WignerFunction(m_dim::T, n_dim::T) where {T<:Integer}
     return WignerFunction(m_dim, n_dim, [], [])
 end
 
-function WignerFunction(x::Vector, p::Vector)
-    return WignerFunction(0, 0, x, p)
+function WignerFunction(xs::Vector, ps::Vector)
+    return WignerFunction(0, 0, xs, ps)
 end
 
-function WignerFunction(x_range::StepRangeLen, p_range::StepRangeLen; ρ_size=35)
-    return WignerFunction(ρ_size, ρ_size, x_range, p_range)
+function WignerFunction(xs::StepRangeLen, ps::StepRangeLen; ρ_size=35)
+    return WignerFunction(ρ_size, ρ_size, xs, ps)
 end
 
 function (wf::WignerFunction)(ρ::AbstractMatrix)
-    reshape(real(sum(ρ .* wf.W, dims=(1, 2))), length(wf.x), length(wf.p))
+    reshape(real(sum(ρ .* wf.W, dims=(1, 2))), length(wf.xs), length(wf.ps))
 end
 
 #=
