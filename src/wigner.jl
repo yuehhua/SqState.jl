@@ -8,7 +8,7 @@ export
 
 function wigner(m::Integer, n::Integer, x::Real, p::Real)
     w = gaussian_function(x, p)
-    w *= combination_number(m, n)
+    w *= coefficient_of_wave_function(m, n)
     w *= z_to_power(m, n, x, p)
     w *= laguerre(m, n, x, p)
 

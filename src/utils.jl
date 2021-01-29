@@ -14,7 +14,7 @@ gaussian_function(x::Vector{<:Real}, p::Vector{<:Real}) = gaussian_function.(x,p
 
 neg_one_to_power_of(i::Integer) = (i % 2 == 0) ? 1 : -1
 
-function combination_number(m::Integer, n::Integer)
+function coefficient_of_wave_function(m::Integer, n::Integer)
     if n ≥ m
         return neg_one_to_power_of(m) * sqrt(factorial_ij(m, n))
     else
@@ -22,7 +22,7 @@ function combination_number(m::Integer, n::Integer)
     end
 end
 
-combination_number(m::Vector{<:Integer}, n::Vector{<:Integer}) = combination_number.(m, n')
+coefficient_of_wave_function(m::Vector{<:Integer}, n::Vector{<:Integer}) = coefficient_of_wave_function.(m, n')
 
 function z_to_power(m::Integer, n::Integer, x::Real, p::Real)
     if n ≥ m
