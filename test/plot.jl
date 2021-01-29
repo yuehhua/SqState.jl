@@ -12,18 +12,18 @@ function main()
     x_range = -5:0.1:5
     p_range = -5:0.1:5
     start_time = time()
-    w = WignerFunction(x_range, p_range)
+    wf = WignerFunction(x_range, p_range)
     end_time = time()
 
     @info "Done, took $(end_time - start_time)(s)"
 
     start_time = time()
-    wig = w(ρ)
-    lim = maximum(abs.(wig))
+    w = wf(ρ)
+    lim = maximum(abs.(w))
     p = heatmap(
         x_range,
         p_range,
-        wig,
+        w,
         title="Wigner Function",
         xlabel="X",
         ylabel="P",
