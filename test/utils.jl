@@ -31,7 +31,22 @@ end
 end
 
 @testset "gaussian_function" begin
+    tol = 1e-14
 
+    x_range = -10:0.01:10
+    p_range = -6:0.01:6
+
+    for x in x_range, p in p_range
+        @test isapprox(SqState.gaussian_function(x, p), exp(-(x^2 + p^2)) / π, atol=tol)
+    end
+
+    xs = collect(x_range)
+    ps = collect(p_range)
+    @test isapprox(
+        SqState.gaussian_function(xs, ps),
+        exp.(-(xs.^2 .+ (ps').^2)) ./ π,
+        atol=tol
+    )
 end
 
 @testset "(-1)^i" begin
