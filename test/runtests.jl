@@ -2,5 +2,8 @@ using SqState
 using Test
 
 @testset "SqState.jl" begin
-    # Write your tests here.
+    include("utils.jl")
+    include("polynomial.jl")
+    include("wigner.jl")
+
 end
