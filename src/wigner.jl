@@ -1,7 +1,6 @@
 export
-    W,
     wigner,
-    gen_wigner
+    WignerFunction
 
 #=
     Wigner function by Laguerre Polynominal
@@ -18,22 +17,40 @@ end
 
 wigner(m::Integer, n::Integer) = (x, p)->wigner(m, n, x, p)
 
-struct W
-    ρ_size::Int64
-    mn::Array{ComplexF64, 4}
-end
+mutable struct WignerFunction{T<:Integer}
+    m_dim::T
+    n_dim::T
+    x
+    p
+    W::Array{ComplexF64,4}
 
-function W(x_range::StepRangeLen, p_range::StepRangeLen; ρ_size=35)
-    mn = Array{ComplexF64,4}(undef, ρ_size, ρ_size, length(x_range), length(p_range))
-    for m in 1:ρ_size, n in 1:ρ_size, (x_i, x) in enumerate(x_range), (p_i, p) = enumerate(p_range)
-        mn[m, n, x_i, p_i] = wigner(m, n, x, p)
+    function WignerFunction(m_dim::T, n_dim::T, xs, ps) where {T<:Integer}
+        if m_dim != 0 && n_dim != 0 && !isempty(xs) && !isempty(ps)
+            W = Array{ComplexF64,4}(undef, m_dim, n_dim, length(xs), length(ps))
+            for m = 1:m_dim, n = 1:n_dim, (x_i, x) = enumerate(xs), (p_j, p) = enumerate(ps)
+                W[m, n, x_i, p_j] = wigner(m ,n, x, p)
+            end
+        else
+            W = Array{ComplexF64,4}(undef, 0, 0, 0, 0)
+        end
+        new{T}(m_dim, n_dim, x, p, W)
     end
-
-    return W(ρ_size, mn)
 end
 
-function wigner(ρ, w::W)
-    reshape(real(sum(ρ .* w.mn, dims=(1, 2))), size(w.mn)[3], size(w.mn)[4])
+function WignerFunction(m_dim::T, n_dim::T) where {T<:Integer}
+    return WignerFunction(m_dim, n_dim, [], [])
+end
+
+function WignerFunction(x::Vector, p::Vector)
+    return WignerFunction(0, 0, x, p)
+end
+
+function WignerFunction(x_range::StepRangeLen, p_range::StepRangeLen; ρ_size=35)
+    return WignerFunction(ρ_size, ρ_size, x_range, p_range)
+end
+
+function (wf::WignerFunction)(ρ::AbstractMatrix)
+    reshape(real(sum(ρ .* wf.W, dims=(1, 2))), length(wf.x), length(wf.p))
 end
 
 #=
