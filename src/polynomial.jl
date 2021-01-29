@@ -25,7 +25,7 @@ function laguerre(n::Integer, α::Integer, x::T) where {T<:Real}
         L_prev = one(T)
         L_k = one(T) + α - x
         for k = 1:(n-1)
-            L_next = ((2k + 1 + α - x) * L_k - (k+α) * L_prev) / (k+1)
+            L_next = ((2k + one(T) + α - x) * L_k - (k+α) * L_prev) / (k+one(T))
             L_prev, L_k = L_k, L_next
         end
         return L_k
@@ -34,4 +34,38 @@ end
 
 laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
 
-factorial_ij(i::Integer, j::Integer) = factorial(big(min(i,j))) / factorial(big(max(i,j)))
+function laguerre(m::Integer, n::Integer, x::Real, p::Real)
+    if n ≥ m
+        return laguerre(m, n - m, abs2(z(x, p)))
+    else
+        return laguerre(n, m - n, abs2(z(x, p)))
+    end
+end
+
+function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer}, x::Vector{<:Real}, p::Vector{<:Real})
+    x = reshape(x, 1, 1, length(x))
+    p = reshape(p, 1, 1, 1, length(p))
+    if n ≥ m
+        return laguerre.(m, n' .- m, x, p)
+    else
+        return laguerre.(n', m .- n', x, p)
+    end
+end
+
+function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer})
+    laguerre_xp(x::Vector{<:Real}, p::Vector{<:Real}) = laguerre(m, n, x, p)
+    return laguerre_xp
+end
+
+function laguerre(x::Vector{<:Real}, p::Vector{<:Real})
+    x = reshape(x, 1, 1, length(x))
+    p = reshape(p, 1, 1, 1, length(p))
+    function laguerre_mn(m::Vector{<:Integer}, n::Vector{<:Integer})
+        if n ≥ m
+            return laguerre.(m, n' .- m, x, p)
+        else
+            return laguerre.(n', m .- n', x, p)
+        end
+    end
+    return laguerre_mn
+end
