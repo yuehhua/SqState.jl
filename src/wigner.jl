@@ -41,36 +41,27 @@ function wigner(m, n, x, p)
     return w
 end
 
-wigner(w_argv::Tuple) = ComplexF64(wigner(w_argv...))
-
-#=
-    Wigner function by Fourier transform
-=#
-
-function wigner(x, p)
-end
-
 struct W
     ρ_size::Int64
     mn::Array{ComplexF64, 4}
 end
 
 function W(x_range::StepRangeLen, p_range::StepRangeLen; ρ_size=35)
-    meshgrid = Tuple[]
-    for x in x_range
-        for p in p_range
-            for m in 1:ρ_size
-                for n in 1:ρ_size
-                    push!(meshgrid, (m, n, x, p))
-                end
-            end
-        end
+    mn = Array{ComplexF64,4}(undef, ρ_size, ρ_size, length(x_range), length(p_range))
+    for m in 1:ρ_size, n in 1:ρ_size, (x_i, x) in enumerate(x_range), (p_i, p) = enumerate(p_range)
+        mn[m, n, x_i, p_i] = wigner(m, n, x, p)
     end
-    mn = reshape(wigner.(meshgrid), ρ_size, ρ_size, length(p_range), length(x_range))
 
     return W(ρ_size, mn)
 end
 
 function wigner(ρ, w::W)
     reshape(real(sum(ρ .* w.mn, dims=(1, 2))), size(w.mn)[3], size(w.mn)[4])
+end
+
+#=
+    Wigner function by Fourier transform
+=#
+
+function wigner(x, p)
 end
