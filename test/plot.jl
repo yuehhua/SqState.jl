@@ -4,7 +4,6 @@ plotly()
 
 function main()
     @info "Initialising"
-    t = time()
 
     data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
     data_name = "sq4"
@@ -12,11 +11,13 @@ function main()
 
     x_range = -5:0.1:5
     p_range = -5:0.1:5
+    start_time = time()
     w = WignerFunction(x_range, p_range)
+    end_time = time()
 
-    @info "Done, took $(time() - t)(s)"
+    @info "Done, took $(end_time - start_time)(s)"
 
-    t = time()
+    start_time = time()
     wig = w(ρ)
     p = heatmap(
         wig,
@@ -26,7 +27,8 @@ function main()
         c=:bluesreds,
         size=(1200, 1100)
     )
-    @info "Render time: $(time() - t)(s)"
+    end_time = time()
+    @info "Render time: $(end_time - start_time)(s)"
 
     return p
 end
