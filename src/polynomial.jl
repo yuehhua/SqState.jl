@@ -25,7 +25,7 @@ function laguerre(n::Integer, α::Integer, x::T) where {T<:Real}
         L_prev = one(T)
         L_k = one(T) + α - x
         for k = 1:(n-1)
-            L_next = ((2k + 1 + α - x) * L_k - (k+α) * L_prev) / (k+1)
+            L_next = ((2k + one(T) + α - x) * L_k - (k+α) * L_prev) / (k+one(T))
             L_prev, L_k = L_k, L_next
         end
         return L_k
@@ -36,9 +36,9 @@ laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
 
 function laguerre(m::Integer, n::Integer, x::Real, p::Real)
     if n ≥ m
-        return laguerre(m, n - m, abs2([x, p]))
+        return laguerre(m, n - m, abs2(z(x, p)))
     else
-        return laguerre(n, m - n, abs2([x, p]))
+        return laguerre(n, m - n, abs2(z(x, p)))
     end
 end
 
