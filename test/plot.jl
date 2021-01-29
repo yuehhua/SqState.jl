@@ -1,32 +1,19 @@
 using SqState
-using HDF5
 using Plots
 plotly()
-
-const SCRIPT_PATH = @__DIR__
-
-function read_ρ()
-    data_path = joinpath(SCRIPT_PATH, "../data", "dm.hdf5")
-
-    ρ_real = h5open(data_path, "r") do file
-        read(file, "sq4/real")
-    end
-    ρ_imag = h5open(data_path, "r") do file
-        read(file, "sq4/imag")
-    end
-
-    ρ = complex.(ρ_real, ρ_imag)'
-
-    return ρ
-end
 
 function main()
     @info "Initialising"
     t = time()
-    ρ = read_ρ()
+
+    data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
+    data_name = "sq4"
+    ρ = read_ρ(data_path, data_name)
+    
     x_range = -5:0.1:5
     p_range = -5:0.1:5
     w = W(x_range, p_range)
+
     @info "Done, took $(time() - t)(s)"
 
     t = time()
