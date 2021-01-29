@@ -29,3 +29,13 @@ end
     ns = collect(n_range)
     @test SqState.α(ms, ns) == max.(ms, ns') .- min.(ms, ns')
 end
+
+@testset "gaussian_function" begin
+
+end
+
+@testset "(-1)^i" begin
+    for i in 1:50
+        @test SqState.neg_one_to_power_of(i) == (-1)^i
+    end
+end
