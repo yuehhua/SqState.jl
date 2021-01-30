@@ -32,7 +32,7 @@ mutable struct WignerFunction{T<:Integer}
     ps
     W::Array{ComplexF64,4}
 
-    function WignerFunction(m_dim::Integer, n_dim::Integer, xs, ps)
+    function WignerFunction(m_dim::T, n_dim::T, xs, ps) where {T<:Integer}
         if check_zero(m_dim, n_dim) && check_empty(xs, ps)
             W = create_wigner(m_dim, n_dim, xs, ps)
         else
@@ -58,7 +58,7 @@ function (wf::WignerFunction)(ρ::AbstractMatrix)
     reshape(real(sum(ρ .* wf.W, dims=(1, 2))), length(wf.xs), length(wf.ps))
 end
 
-function setproperty!(wf::WignerFunction, name::Symbol, x)
+function Base.setproperty!(wf::WignerFunction, name::Symbol, x)
     setfield!(wf, name, x)
     m_dim = getproperty(wf, :m_dim)
     n_dim = getproperty(wf, :n_dim)
@@ -70,7 +70,7 @@ function setproperty!(wf::WignerFunction, name::Symbol, x)
     end
 end
 
-check_zero(m_dim, n_dim) = (!iszero(m_dim)) && (!iszero(n_dim))
+check_zero(m_dim, n_dim) = !iszero(m_dim) && !iszero(n_dim)
 
 check_empty(xs, ps) = !isempty(xs) && !isempty(ps)
 
