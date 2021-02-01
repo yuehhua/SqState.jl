@@ -9,7 +9,7 @@ end
     xs = -1:0.1:1
     ps = -1:0.1:1
 
-    wf = init_wf(x_range, p_range)
+    wf = WignerFunction(xs, ps)
     ρ = ones(ComplexF64, 35, 35)
     w = wf(ρ)
     ans = real(sum(ρ .* wf.W, dims=(1, 2)))
