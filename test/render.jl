@@ -21,7 +21,13 @@ end
     wf = init_wf(x_range, p_range)
 
     ρ = ones(ComplexF64, 35, 35)
-    p, w = render(ρ, wf)
+    p, w = render(ρ, wf, save=true)
+
+    file_name = "wigner.png"
+    @test isfile(file_name)
+    if isfile(file_name)
+        rm(file_name)
+    end
 
     ans = real(sum(ρ .* wf.W, dims=(1, 2)))
     for (i, e) in enumerate(w)
