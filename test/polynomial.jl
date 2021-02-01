@@ -37,11 +37,11 @@ end
 
     # n >= m
     for m in m_range, n in m:n_range.stop, x in x_range, p in p_range
-        @test abs(laguerre(m, n, x, p) - laguerre(m, n-m, 2(x^2 + p^2))) < 1e-5
+        @test abs(laguerre(m, n, x, p) - laguerre(m-1, n-m, 2(x^2 + p^2))) < 1e-5
     end
     # n < m
     for n in n_range, m in n:m_range.stop, x in x_range, p in p_range
-        @test abs(laguerre(m, n, x, p) - laguerre(n, m-n, 2(x^2 + p^2))) < 1e-5
+        @test abs(laguerre(m, n, x, p) - laguerre(n-1, m-n, 2(x^2 + p^2))) < 1e-5
     end
 
     ms = collect(m_range)

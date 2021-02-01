@@ -13,9 +13,11 @@ neg_one_to_power_of(i::Integer) = (i % 2 == 0) ? 1 : -1
 
 function coefficient_of_wave_function(m::Integer, n::Integer)
     if n ≥ m
-        return neg_one_to_power_of(m) * sqrt(factorial_ij(m, n))
+        # adjust index bases for number state on `m`
+        return neg_one_to_power_of(m-1) * sqrt(factorial_ij(m, n))
     else
-        return neg_one_to_power_of(n) * sqrt(factorial_ij(m, n))
+        # adjust index bases for number state on `n`
+        return neg_one_to_power_of(n-1) * sqrt(factorial_ij(m, n))
     end
 end
 

@@ -36,20 +36,18 @@ laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
 
 function laguerre(m::Integer, n::Integer, x::Real, p::Real)
     if n ≥ m
-        return laguerre(m, n - m, abs2(z(x, p)))
+        # adjust index bases for number state on `m`
+        return laguerre(m-1, n - m, abs2(z(x, p)))
     else
-        return laguerre(n, m - n, abs2(z(x, p)))
+        # adjust index bases for number state on `n`
+        return laguerre(n-1, m - n, abs2(z(x, p)))
     end
 end
 
 function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer}, x::Vector{<:Real}, p::Vector{<:Real})
     x = reshape(x, 1, 1, length(x))
     p = reshape(p, 1, 1, 1, length(p))
-    if n ≥ m
-        return laguerre.(m, n' .- m, x, p)
-    else
-        return laguerre.(n', m .- n', x, p)
-    end
+    return laguerre.(m, n', x, p)
 end
 
 function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer})
@@ -61,11 +59,7 @@ function laguerre(x::Vector{<:Real}, p::Vector{<:Real})
     x = reshape(x, 1, 1, length(x))
     p = reshape(p, 1, 1, 1, length(p))
     function laguerre_mn(m::Vector{<:Integer}, n::Vector{<:Integer})
-        if n ≥ m
-            return laguerre.(m, n' .- m, x, p)
-        else
-            return laguerre.(n', m .- n', x, p)
-        end
+        return laguerre.(m, n', x, p)
     end
     return laguerre_mn
 end
