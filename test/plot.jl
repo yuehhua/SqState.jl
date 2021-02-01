@@ -1,18 +1,17 @@
-using SqState
+@testset "plot wigner" begin
+    x_range = -5:1.0:5
+    p_range = -5:1.0:5
+    wf = WignerFunction(x_range, p_range)
 
-function main()
-    x_range = -10:0.1:10
-    p_range = -10:0.1:10
-    wf = init_wf(x_range, p_range)
+    ρ = ones(ComplexF64, 35, 35)
+    w = wf(ρ)
 
-    data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
-    data_name = "SQ4"
-    ρ = read_ρ(data_path, data_name)
-    p, w = render(ρ, wf, save=true)
+    file_path = "wigner.png"
+    plot_wigner(wf, w, Heatmap, save=true, file_path=file_path)
+    @test isfile(file_path)
+    isfile(file_path) && rm(file_path)
 
-    # println(w)
-
-    return p
+    plot_wigner(wf, w, Contour, save=true, file_path=file_path)
+    @test isfile(file_path)
+    isfile(file_path) && rm(file_path)
 end
-
-main()
