@@ -6,7 +6,7 @@ function main()
     @info "Initialising"
 
     data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
-    data_name = "sq4"
+    data_name = "SQ4"
     ρ = read_ρ(data_path, data_name)
 
     x_range = -5:0.1:5

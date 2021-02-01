@@ -36,9 +36,9 @@ laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
 
 function laguerre(m::Integer, n::Integer, x::Real, p::Real)
     if n ≥ m
-        return laguerre(m, n - m, abs2(z(x, p)))
+        return laguerre(m-1, n - m, abs2(z(x, p)))
     else
-        return laguerre(n, m - n, abs2(z(x, p)))
+        return laguerre(n-1, m - n, abs2(z(x, p)))
     end
 end
 
