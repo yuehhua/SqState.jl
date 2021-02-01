@@ -73,10 +73,3 @@ end
 check_zero(m_dim, n_dim) = !iszero(m_dim) && !iszero(n_dim)
 
 check_empty(xs, ps) = !isempty(xs) && !isempty(ps)
-
-#=
-    Wigner function by Fourier transform
-=#
-
-function wigner(x, p)
-end
