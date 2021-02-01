@@ -17,6 +17,14 @@ end
 
 wigner(m::Integer, n::Integer) = (x, p)->wigner(m, n, x, p)
 
+function create_wigner(m_dim::Integer, n_dim::Integer, xs, ps)
+    W = Array{ComplexF64,4}(undef, m_dim, n_dim, length(xs), length(ps))
+    for m = 1:m_dim, n = 1:n_dim, (x_i, x) = enumerate(xs), (p_j, p) = enumerate(ps)
+        W[m, n, x_i, p_j] = wigner(m ,n, x, p)
+    end
+    return W
+end
+
 mutable struct WignerFunction{T<:Integer}
     m_dim::T
     n_dim::T
@@ -25,11 +33,8 @@ mutable struct WignerFunction{T<:Integer}
     W::Array{ComplexF64,4}
 
     function WignerFunction(m_dim::T, n_dim::T, xs, ps) where {T<:Integer}
-        if m_dim != 0 && n_dim != 0 && !isempty(xs) && !isempty(ps)
-            W = Array{ComplexF64,4}(undef, m_dim, n_dim, length(xs), length(ps))
-            for m = 1:m_dim, n = 1:n_dim, (x_i, x) = enumerate(xs), (p_j, p) = enumerate(ps)
-                W[m, n, x_i, p_j] = wigner(m ,n, x, p)
-            end
+        if check_zero(m_dim, n_dim) && check_empty(xs, ps)
+            W = create_wigner(m_dim, n_dim, xs, ps)
         else
             W = Array{ComplexF64,4}(undef, 0, 0, 0, 0)
         end
@@ -52,6 +57,22 @@ end
 function (wf::WignerFunction)(ρ::AbstractMatrix)
     reshape(real(sum(ρ .* wf.W, dims=(1, 2))), length(wf.xs), length(wf.ps))
 end
+
+function Base.setproperty!(wf::WignerFunction, name::Symbol, x)
+    setfield!(wf, name, x)
+    m_dim = getproperty(wf, :m_dim)
+    n_dim = getproperty(wf, :n_dim)
+    xs = getproperty(wf, :xs)
+    ps = getproperty(wf, :ps)
+    if check_zero(m_dim, n_dim) && check_empty(xs, ps)
+        W = create_wigner(m_dim, n_dim, xs, ps)
+        setfield!(wf, :W, W)
+    end
+end
+
+check_zero(m_dim, n_dim) = !iszero(m_dim) && !iszero(n_dim)
+
+check_empty(xs, ps) = !isempty(xs) && !isempty(ps)
 
 #=
     Wigner function by Fourier transform
