@@ -7,19 +7,17 @@ export
     render
 
 function init_wf(x_range, p_range)
-    @info "Initialising"
-    start_time = time()
+    # @info "Initialising"
+    # start_time = time()
     wf = WignerFunction(x_range, p_range)
-    end_time = time()
-    @info "Done, took $(end_time - start_time)(s)"
+    # end_time = time()
+    # @info "Done, took $(end_time - start_time)(s)"
 
     return wf
 end
 
-function render(data_path::String, data_name::String, wf::WignerFunction; save=false)
-    start_time = time()
-    ρ = read_ρ(data_path, data_name)
-
+function render(ρ::AbstractMatrix, wf::WignerFunction; save=false)
+    # start_time = time()
     w = wf(ρ)
     lim = maximum(abs.(w))
     p = heatmap(
@@ -39,8 +37,8 @@ function render(data_path::String, data_name::String, wf::WignerFunction; save=f
         ]),
         size=(900, 825)
     )
-    end_time = time()
-    @info "Render time: $(end_time - start_time)(s)"
+    # end_time = time()
+    # @info "Render time: $(end_time - start_time)(s)"
 
     if save
         savefig(p, joinpath(SqState.PROJECT_PATH, "../data/render", "wigner.png"))

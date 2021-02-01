@@ -7,6 +7,6 @@ using Test
     include("utils.jl")
     include("polynomial.jl")
     include("wigner.jl")
-    # include("render.jl")
+    include("render.jl")
 
 end
