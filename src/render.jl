@@ -16,7 +16,7 @@ function init_wf(x_range, p_range)
     return wf
 end
 
-function render(ρ::AbstractMatrix, wf::WignerFunction; save=false, file_name="wigner.png")
+function render(ρ::AbstractMatrix, wf::WignerFunction; save=false, file_path="wigner.png")
     # start_time = time()
     w = wf(ρ)
     lim = maximum(abs.(w))
@@ -41,7 +41,7 @@ function render(ρ::AbstractMatrix, wf::WignerFunction; save=false, file_name="w
     # @info "Render time: $(end_time - start_time)(s)"
 
     if save
-        savefig(p, joinpath(SqState.PROJECT_PATH, "../data/render", file_name))
+        savefig(p, file_path)
     end
 
     return p, w
