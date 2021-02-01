@@ -21,7 +21,10 @@ end
     wf = init_wf(x_range, p_range)
 
     ρ = ones(ComplexF64, 35, 35)
-    p, w = render(ρ, wf)
+    file_name = "test.png"
+    p, w = render(ρ, wf, save=true, file_name=file_name)
+
+    @test isfile(joinpath(SqState.PROJECT_PATH, "../data/render", file_name))
 
     ans = real(sum(ρ .* wf.W, dims=(1, 2)))
     for (i, e) in enumerate(w)
