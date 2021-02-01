@@ -45,11 +45,7 @@ end
 function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer}, x::Vector{<:Real}, p::Vector{<:Real})
     x = reshape(x, 1, 1, length(x))
     p = reshape(p, 1, 1, 1, length(p))
-    if n ≥ m
-        return laguerre.(m, n' .- m, x, p)
-    else
-        return laguerre.(n', m .- n', x, p)
-    end
+    return laguerre.(m, n', x, p)
 end
 
 function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer})
@@ -61,11 +57,7 @@ function laguerre(x::Vector{<:Real}, p::Vector{<:Real})
     x = reshape(x, 1, 1, length(x))
     p = reshape(p, 1, 1, 1, length(p))
     function laguerre_mn(m::Vector{<:Integer}, n::Vector{<:Integer})
-        if n ≥ m
-            return laguerre.(m, n' .- m, x, p)
-        else
-            return laguerre.(n', m .- n', x, p)
-        end
+        return laguerre.(m, n', x, p)
     end
     return laguerre_mn
 end
