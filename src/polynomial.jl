@@ -36,8 +36,10 @@ laguerre(n::Integer, α::Integer) = x->laguerre(n, α, x)
 
 function laguerre(m::Integer, n::Integer, x::Real, p::Real)
     if n ≥ m
+        # adjust index bases for number state on `m`
         return laguerre(m-1, n - m, abs2(z(x, p)))
     else
+        # adjust index bases for number state on `n`
         return laguerre(n-1, m - n, abs2(z(x, p)))
     end
 end

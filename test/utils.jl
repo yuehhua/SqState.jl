@@ -61,7 +61,7 @@ end
     m_range = n_range = 1:35
 
     for m in m_range, n in n_range
-        m1 = (n ≥ m) ? (-1)^m : (-1)^n
+        m1 = (n ≥ m) ? (-1)^(m-1) : (-1)^(n-1)
         @test isapprox(
             SqState.coefficient_of_wave_function(m, n),
             m1 * sqrt(factorial(big(min(m, n))) / factorial(big(max(m, n)))),
