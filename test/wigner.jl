@@ -9,6 +9,14 @@ end
     xs = -1:0.1:1
     ps = -1:0.1:1
 
+    wf = init_wf(x_range, p_range)
+    ρ = ones(ComplexF64, 35, 35)
+    w = wf(ρ)
+    ans = real(sum(ρ .* wf.W, dims=(1, 2)))
+    for (i, e) in enumerate(w)
+        @test e == ans[i]
+    end
+
     wf = WignerFunction(m_dim, n_dim)
     @test size(wf.W) == (0, 0, 0, 0)
     wf.xs = xs

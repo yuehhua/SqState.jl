@@ -1,36 +1,17 @@
-@testset "init wigner function" begin
+@testset "plot wigner" begin
     x_range = -5:1.0:5
     p_range = -5:1.0:5
-    wf = init_wf(x_range, p_range)
-
-    @test wf isa WignerFunction
-    @test wf.m_dim == wf.n_dim == 35
-    @test wf.xs == x_range
-    @test wf.ps == p_range
-    m_dim = n_dim = 35
-    for m in 1:m_dim, n in 1:n_dim,
-        (x_i, x) in enumerate(x_range), (p_j, p) in enumerate(p_range)
-
-        @test wf.W[m, n, x_i, p_j] == ComplexF64(wigner(m ,n, x, p))
-    end
-end
-
-@testset "render" begin
-    x_range = -5:1.0:5
-    p_range = -5:1.0:5
-    wf = init_wf(x_range, p_range)
+    wf = WignerFunction(x_range, p_range)
 
     ρ = ones(ComplexF64, 35, 35)
-    p, w = render(ρ, wf, save=true)
+    w = wf(ρ)
 
-    file_name = "wigner.png"
-    @test isfile(file_name)
-    if isfile(file_name)
-        rm(file_name)
-    end
+    file_path = "wigner.png"
+    plot_wigner(wf, w, Heatmap, save=true, file_path=file_path)
+    @test isfile(file_path)
+    isfile(file_path) && rm(file_path)
 
-    ans = real(sum(ρ .* wf.W, dims=(1, 2)))
-    for (i, e) in enumerate(w)
-        @test e == ans[i]
-    end
+    plot_wigner(wf, w, Contour, save=true, file_path=file_path)
+    @test isfile(file_path)
+    isfile(file_path) && rm(file_path)
 end

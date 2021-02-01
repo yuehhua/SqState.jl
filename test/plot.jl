@@ -1,16 +1,30 @@
 using SqState
 
 function main()
-    x_range = -10:0.1:10
-    p_range = -10:0.1:10
-    wf = init_wf(x_range, p_range)
+    ########################
+    # init wigner function #
+    ########################
+    x_range = -10:0.2:10
+    p_range = -10:0.2:10
+    # @info "Initialising"
+    # start_time = time()
+    wf = WignerFunction(x_range, p_range)
+    # end_time = time()
+    # @info "Done, took $(end_time - start_time)(s)"
 
+    ##########
+    # render #
+    ##########
     data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
     data_name = "SQ4"
     ρ = read_ρ(data_path, data_name)
-    p, w = render(ρ, wf, save=true)
+    w = wf(ρ)
 
-    # println(w)
+    ########
+    # plot #
+    ########
+    file_path = joinpath(SqState.PROJECT_PATH, "../data/render", "wigner.png")
+    p = plot_wigner(wf, w, Heatmap, save=true, file_path = file_path)
 
     return p
 end
