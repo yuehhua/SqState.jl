@@ -1,4 +1,9 @@
 @testset "wigner" begin
+    m, n, x, p = 40, 3, -9.1, 10.5
+    @test wigner(m, n)(x, p) == wigner(m, n, x, p)
+end
+
+@testset "WignerFunction" begin
     m_dim = 10
     n_dim = 10
     xs = -1:0.1:1
