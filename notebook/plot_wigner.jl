@@ -12,13 +12,6 @@ begin
 	# plotly()
 end;
 
-# ╔═╡ f442a020-6533-11eb-3592-755f6b60b469
-html"""<style>
-main {
-    max-width: 1000px;
-}
-"""
-
 # ╔═╡ 2279cfae-6534-11eb-04bd-e7ce1910fc83
 md"
 # Plot Wigner Function
@@ -62,7 +55,6 @@ md"**Contour**"
 plot_wigner(wf, w, Contour)
 
 # ╔═╡ Cell order:
-# ╟─f442a020-6533-11eb-3592-755f6b60b469
 # ╟─2279cfae-6534-11eb-04bd-e7ce1910fc83
 # ╠═d393a05a-6532-11eb-04b2-35f9af4bdbc2
 # ╟─e46bc790-6532-11eb-2c16-3b43640c7653
