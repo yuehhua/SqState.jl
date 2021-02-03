@@ -19,7 +19,7 @@ const C_GRAD = cgrad([
 ])
 
 function plot_wigner(
-    wf::WignerFunction, w::AbstractMatrix, method::Type{Heatmap};
+    wf::WignerFunction, w::AbstractMatrix, ::Type{Heatmap};
     save=false, file_path="wigner.png"
 )
     lim = maximum(abs.(w))
@@ -39,7 +39,7 @@ function plot_wigner(
 end
 
 function plot_wigner(
-    wf::WignerFunction, w::AbstractMatrix, method::Type{Contour};
+    wf::WignerFunction, w::AbstractMatrix, ::Type{Contour};
     save=false, file_path="wigner.png"
 )
     lim = maximum(abs.(w))
