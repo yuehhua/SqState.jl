@@ -82,7 +82,7 @@ function plot_wigner(
             ylabel=:P,
             cbrange=(-lim, lim),
             grid=:on,
-            view=(45, -45),
+            view=(45, 315),
             palette="defined (-$lim '#239DDB', 0 '#F0F0F0', $lim '#DB4044')"
         ),
     )
