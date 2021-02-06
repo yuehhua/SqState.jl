@@ -7,6 +7,9 @@ using InteractiveUtils
 # ╔═╡ d393a05a-6532-11eb-04b2-35f9af4bdbc2
 using SqState
 
+# ╔═╡ a130c190-689a-11eb-2879-6fcbbd39d7cb
+using BenchmarkTools
+
 # ╔═╡ 2279cfae-6534-11eb-04bd-e7ce1910fc83
 md"
 # Plot Wigner Function
@@ -52,6 +55,9 @@ md"
 # ╔═╡ a26f33b0-688c-11eb-246c-6f2a4c09f09a
 plot_wigner(wf, w, Surface)
 
+# ╔═╡ a9db6a98-689a-11eb-11d5-d3fea7c24256
+@benchmark plot_wigner(wf, w, Surface)
+
 # ╔═╡ a24789e8-6533-11eb-2bb9-db79fb1c365c
 md"
 **Heatmap**
@@ -59,6 +65,9 @@ md"
 
 # ╔═╡ 7f9264d6-6533-11eb-1c6c-434909802cb5
 plot_wigner(wf, w, Heatmap)
+
+# ╔═╡ b581cdf6-689a-11eb-209c-45745b570e50
+@benchmark plot_wigner(wf, w, Heatmap)
 
 # ╔═╡ 903502b0-6533-11eb-2ed0-0d1bcfe1fe99
 md"
@@ -68,6 +77,9 @@ md"
 # ╔═╡ 0da7f0fc-6538-11eb-0aa7-e1635323a04d
 plot_wigner(wf, w, Contour)
 
+# ╔═╡ b82b6e38-689a-11eb-0741-a332b072ea1f
+@benchmark plot_wigner(wf, w, Contour)
+
 # ╔═╡ Cell order:
 # ╟─2279cfae-6534-11eb-04bd-e7ce1910fc83
 # ╠═d393a05a-6532-11eb-04b2-35f9af4bdbc2
@@ -76,9 +88,13 @@ plot_wigner(wf, w, Contour)
 # ╟─2fe499fe-6533-11eb-0bcd-9d00d9b4e1d0
 # ╠═125c6e66-6533-11eb-03b4-7122cc3e5806
 # ╟─6cb3a712-6533-11eb-34f3-6339e020be33
+# ╠═a130c190-689a-11eb-2879-6fcbbd39d7cb
 # ╟─973b2490-688c-11eb-0c2a-39e621770fba
 # ╠═a26f33b0-688c-11eb-246c-6f2a4c09f09a
+# ╠═a9db6a98-689a-11eb-11d5-d3fea7c24256
 # ╟─a24789e8-6533-11eb-2bb9-db79fb1c365c
 # ╠═7f9264d6-6533-11eb-1c6c-434909802cb5
+# ╠═b581cdf6-689a-11eb-209c-45745b570e50
 # ╟─903502b0-6533-11eb-2ed0-0d1bcfe1fe99
 # ╠═0da7f0fc-6538-11eb-0aa7-e1635323a04d
+# ╠═b82b6e38-689a-11eb-0741-a332b072ea1f
