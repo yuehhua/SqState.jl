@@ -52,7 +52,6 @@ function plot_wigner(
         clim=(-lim, lim),
         fill=true,
         c=C_GRAD,
-        size=(900, 825),
     )
 
     save && savefig(p, file_path)
