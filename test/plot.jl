@@ -7,11 +7,16 @@
     w = wf(ρ)
 
     file_path = "wigner.png"
-    plot_wigner(wf, w, Heatmap, save=true, file_path=file_path)
+    
+    plot_wigner(wf, w, Heatmap, file_path=file_path)
     @test isfile(file_path)
     isfile(file_path) && rm(file_path)
 
-    plot_wigner(wf, w, Contour, save=true, file_path=file_path)
+    plot_wigner(wf, w, Contour, file_path=file_path)
+    @test isfile(file_path)
+    isfile(file_path) && rm(file_path)
+
+    plot_wigner(wf, w, Surface, file_path=file_path)
     @test isfile(file_path)
     isfile(file_path) && rm(file_path)
 end
