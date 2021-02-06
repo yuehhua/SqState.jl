@@ -8,6 +8,7 @@ using InteractiveUtils
 begin
 	using SqState
 	using BenchmarkTools
+	using Plots: gr; gr(fmt=:png)
 end
 
 # ╔═╡ 2279cfae-6534-11eb-04bd-e7ce1910fc83
@@ -43,7 +44,7 @@ begin
 end;
 
 # ╔═╡ ce5a611a-689c-11eb-0bc0-11a765ac2ffa
-@benchmark wf(ρ)
+@benchmark wf($ρ)
 
 # ╔═╡ 6cb3a712-6533-11eb-34f3-6339e020be33
 md"
@@ -59,7 +60,7 @@ md"
 plot_wigner(wf, w, Surface)
 
 # ╔═╡ a9db6a98-689a-11eb-11d5-d3fea7c24256
-@benchmark plot_wigner(wf, w, Surface)
+@benchmark plot_wigner($wf, $w, Surface)
 
 # ╔═╡ a24789e8-6533-11eb-2bb9-db79fb1c365c
 md"
@@ -70,7 +71,7 @@ md"
 plot_wigner(wf, w, Heatmap)
 
 # ╔═╡ b581cdf6-689a-11eb-209c-45745b570e50
-@benchmark plot_wigner(wf, w, Heatmap)
+@benchmark plot_wigner($wf, $w, Heatmap)
 
 # ╔═╡ 903502b0-6533-11eb-2ed0-0d1bcfe1fe99
 md"
@@ -81,7 +82,7 @@ md"
 plot_wigner(wf, w, Contour)
 
 # ╔═╡ b82b6e38-689a-11eb-0741-a332b072ea1f
-@benchmark plot_wigner(wf, w, Contour)
+@benchmark plot_wigner($wf, $w, Contour)
 
 # ╔═╡ Cell order:
 # ╟─2279cfae-6534-11eb-04bd-e7ce1910fc83
