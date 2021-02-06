@@ -22,6 +22,7 @@ function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Heatmap};
     save=false, file_path="wigner.png"
 )
+    gr(size=(900, 825))
     lim = maximum(abs.(w))
     p = heatmap(
         wf.xs, wf.ps, w,
@@ -30,7 +31,6 @@ function plot_wigner(
         ylabel="P",
         clim=(-lim, lim),
         c=C_GRAD,
-        size=(900, 825),
     )
 
     save && savefig(p, file_path)
@@ -42,6 +42,7 @@ function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Contour};
     save=false, file_path="wigner.png"
 )
+    gr(size=(900, 825))
     lim = maximum(abs.(w))
     p = contour(
         wf.xs, wf.ps, w,

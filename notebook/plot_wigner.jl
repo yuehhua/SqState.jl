@@ -9,7 +9,6 @@ begin
 	using SqState
 	using Plots
 	gr(fmt=:png)
-	# plotly()
 end;
 
 # ╔═╡ 2279cfae-6534-11eb-04bd-e7ce1910fc83
@@ -34,7 +33,7 @@ md"## Render Wigner function"
 # ╔═╡ 125c6e66-6533-11eb-03b4-7122cc3e5806
 begin
 	data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
-    data_name = "SQ4"
+    data_name = "sq4"
     ρ = read_ρ(data_path, data_name)
     w = wf(ρ)
 end;
