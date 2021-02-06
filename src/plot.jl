@@ -24,9 +24,10 @@ const C_GRAD = cgrad([
 
 function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Heatmap};
+    size=(700, 630),
     file_path=nothing
 )
-    gr(size=(900, 825))
+    gr(size=size)
     lim = maximum(abs.(w))
     p = Plots.heatmap(
         wf.xs, wf.ps, w,
@@ -44,9 +45,10 @@ end
 
 function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Contour};
+    size=(700, 630),
     file_path=nothing
 )
-    gr(size=(900, 825))
+    gr(size=size)
     lim = maximum(abs.(w))
     p = Plots.contour(
         wf.xs, wf.ps, w,
@@ -55,6 +57,7 @@ function plot_wigner(
         ylabel="P",
         clim=(-lim, lim),
         fill=true,
+        levels=20,
         c=C_GRAD,
     )
 
@@ -65,22 +68,29 @@ end
 
 function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Surface};
+    size=(700, 630),
     file_path=nothing
 )
+    lim = maximum(abs.(w))
+    gp = "set contour base; unset key"
     p = surf(
         wf.xs, wf.ps, w,
-        with = "pm3d",
+        plotstyle="pm3d",
         Axes(
             title=:Wigner_Function,
-            view=(45, 45),
-            cbrange=(-3, 3),
-        )
+            xlabel=:X,
+            ylabel=:P,
+            cbrange=(-lim, lim),
+            grid=:on,
+            view=(45, -45),
+            palette="defined (-$lim '#239DDB', 0 '#F0F0F0', $lim '#DB4044')"
+        ),
     )
 
     isnothing(file_path) || save(
         term="png",
         output=file_path,
-        saveopts="font 'Consolas,10' size 900,825"
+        saveopts="font 'Consolas,10' size $(size[1]),$(size[2])"
     )
 
     return p

@@ -16,7 +16,7 @@ function main()
     # render #
     ##########
     data_path = joinpath(SqState.PROJECT_PATH, "../data", "dm.hdf5")
-    data_name = "sq4"
+    data_name = "SQ4"
     ρ = read_ρ(data_path, data_name)
     w = wf(ρ)
 
@@ -24,11 +24,11 @@ function main()
     # plot #
     ########
     file_path = joinpath(SqState.PROJECT_PATH, "../data/render", "wigner_contour.png")
-    p = plot_wigner(wf, w, Contour, save=true, file_path=file_path)
+    p = plot_wigner(wf, w, Contour, file_path=file_path)
     file_path = joinpath(SqState.PROJECT_PATH, "../data/render", "wigner_heatmap.png")
-    p = plot_wigner(wf, w, Heatmap, save=true, file_path=file_path)
+    p = plot_wigner(wf, w, Heatmap, file_path=file_path)
     file_path = joinpath(SqState.PROJECT_PATH, "../data/render", "wigner_surface.png")
-    p = plot_wigner(wf, w, Surface, save=true, file_path=file_path)
+    p = plot_wigner(wf, w, Surface, file_path=file_path)
 
     return p
 end
