@@ -24,7 +24,7 @@ const C_GRAD = cgrad([
 
 function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Heatmap};
-    save=false, file_path="wigner.png"
+    file_path=nothing
 )
     gr(size=(900, 825))
     lim = maximum(abs.(w))
@@ -37,14 +37,14 @@ function plot_wigner(
         c=C_GRAD,
     )
 
-    save && savefig(p, file_path)
+    isnothing(file_path) || savefig(p, file_path)
 
     return p
 end
 
 function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Contour};
-    save=false, file_path="wigner.png"
+    file_path=nothing
 )
     gr(size=(900, 825))
     lim = maximum(abs.(w))
@@ -58,14 +58,14 @@ function plot_wigner(
         c=C_GRAD,
     )
 
-    save && savefig(p, file_path)
+    isnothing(file_path) || savefig(p, file_path)
 
     return p
 end
 
 function plot_wigner(
     wf::WignerFunction, w::AbstractMatrix, ::Type{Surface};
-    save=false, file_path="wigner.png"
+    file_path=nothing
 )
     p = surf(
         wf.xs, wf.ps, w,
@@ -77,10 +77,11 @@ function plot_wigner(
         )
     )
 
-    # save && save(
-    #     term="png", output =file_path,
-    #     saveopts="font 'Consolas,10' size 900,825"
-    # )
+    isnothing(file_path) || save(
+        term="png",
+        output=file_path,
+        saveopts="font 'Consolas,10' size 900,825"
+    )
 
     return p
 end
