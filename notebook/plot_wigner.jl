@@ -5,10 +5,10 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ d393a05a-6532-11eb-04b2-35f9af4bdbc2
-using SqState
-
-# ╔═╡ a130c190-689a-11eb-2879-6fcbbd39d7cb
-using BenchmarkTools
+begin
+	using SqState
+	using BenchmarkTools
+end
 
 # ╔═╡ 2279cfae-6534-11eb-04bd-e7ce1910fc83
 md"
@@ -41,6 +41,9 @@ begin
     ρ = read_ρ(data_path, data_name)
     w = wf(ρ)
 end;
+
+# ╔═╡ ce5a611a-689c-11eb-0bc0-11a765ac2ffa
+@benchmark wf(ρ)
 
 # ╔═╡ 6cb3a712-6533-11eb-34f3-6339e020be33
 md"
@@ -87,8 +90,8 @@ plot_wigner(wf, w, Contour)
 # ╠═f7af8256-6532-11eb-066b-d55e91cddc92
 # ╟─2fe499fe-6533-11eb-0bcd-9d00d9b4e1d0
 # ╠═125c6e66-6533-11eb-03b4-7122cc3e5806
+# ╠═ce5a611a-689c-11eb-0bc0-11a765ac2ffa
 # ╟─6cb3a712-6533-11eb-34f3-6339e020be33
-# ╠═a130c190-689a-11eb-2879-6fcbbd39d7cb
 # ╟─973b2490-688c-11eb-0c2a-39e621770fba
 # ╠═a26f33b0-688c-11eb-246c-6f2a4c09f09a
 # ╠═a9db6a98-689a-11eb-11d5-d3fea7c24256
