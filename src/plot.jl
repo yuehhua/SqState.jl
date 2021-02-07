@@ -1,6 +1,5 @@
 using SqState
 using Plots
-using Gaston
 
 export
     Heatmap,
@@ -71,27 +70,25 @@ function plot_wigner(
     size=(700, 630),
     file_path=nothing
 )
-    lim = maximum(abs.(w))
-    gp = "set contour base; unset key"
-    p = surf(
-        wf.xs, wf.ps, w,
-        plotstyle="pm3d",
-        Axes(
-            title=:Wigner_Function,
-            xlabel=:X,
-            ylabel=:P,
-            cbrange=(-lim, lim),
-            grid=:on,
-            view=(60, 315),
-            palette="defined (-$lim '#239DDB', 0 '#F0F0F0', $lim '#DB4044')"
-        ),
-    )
+    get_w(x, p) = w[
+        round(Int, (x-wf.xs[1])/Float64(wf.xs.step))+1,
+        round(Int, (p-wf.ps[1])/Float64(wf.ps.step))+1
+    ]
 
-    isnothing(file_path) || save(
-        term="png",
-        output=file_path,
-        saveopts="font 'Consolas,10' size $(size[1]),$(size[2])"
-    )
+    gr(size=size)
+    lim = maximum(abs.(w))
+    p = surface(
+		wf.xs, wf.ps, get_w,
+		title="Wigner Function",
+        xlabel="X",
+        ylabel="P",
+        clim=(-lim, lim),
+		zlim=(-lim, lim),
+		c=C_GRAD,
+		camera=(40, 30),
+	)
+
+    isnothing(file_path) || savefig(p, file_path)
 
     return p
 end
