@@ -45,12 +45,3 @@ function z_to_power(m::Vector{<:Integer}, n::Vector{<:Integer})
     end
     return z_to_power_xp
 end
-
-function z_to_power(x::Vector{<:Real}, p::Vector{<:Real})
-    x = reshape(x, 1, 1, length(x))
-    p = reshape(p, 1, 1, 1, length(p))
-    function z_to_power_mn(m::Vector{<:Integer}, n::Vector{<:Integer})
-        z_to_power.(m, n', x, p)
-    end
-    return z_to_power_mn
-end

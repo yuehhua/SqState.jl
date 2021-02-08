@@ -49,5 +49,4 @@ end
     xs = collect(x_range)
     ps = collect(p_range)
     @test laguerre(ms, ns)(xs, ps) == laguerre(ms, ns, xs, ps)
-    @test laguerre(xs, ps)(ms, ns) == laguerre(ms, ns, xs, ps)
 end

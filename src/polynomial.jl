@@ -54,12 +54,3 @@ function laguerre(m::Vector{<:Integer}, n::Vector{<:Integer})
     laguerre_xp(x::Vector{<:Real}, p::Vector{<:Real}) = laguerre(m, n, x, p)
     return laguerre_xp
 end
-
-function laguerre(x::Vector{<:Real}, p::Vector{<:Real})
-    x = reshape(x, 1, 1, length(x))
-    p = reshape(p, 1, 1, 1, length(p))
-    function laguerre_mn(m::Vector{<:Integer}, n::Vector{<:Integer})
-        return laguerre.(m, n', x, p)
-    end
-    return laguerre_mn
-end
