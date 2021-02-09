@@ -93,5 +93,6 @@ end
     xs_ = reshape(collect(x_range), 1, 1, length(x_range))
     ps_ = reshape(collect(p_range), 1, 1, 1, length(p_range))
     @test SqState.z_to_power(ms, ns, xs, ps) == SqState.z_to_power.(ms, ns', xs_, ps_)
-    @test SqState.z_to_power(ms, ns)(xs, ps) == SqState.z_to_power.(ms, ns', xs_, ps_)
+    f = SqState.z_to_power(35, 35)
+    @test f(x_range[10], p_range[10]) == SqState.z_to_power.(ms, ns', x_range[10], p_range[10])
 end

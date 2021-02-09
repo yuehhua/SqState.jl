@@ -37,11 +37,12 @@ function z_to_power(m::Vector{<:Integer}, n::Vector{<:Integer}, x::Vector{<:Real
     z_to_power.(m, n', x, p)
 end
 
-function z_to_power(m::Vector{<:Integer}, n::Vector{<:Integer})
-    function z_to_power_xp(x::Vector{<:Real}, p::Vector{<:Real})
-        x = reshape(x, 1, 1, length(x))
-        p = reshape(p, 1, 1, 1, length(p))
-        z_to_power.(m, n', x, p)
+function z_to_power(m::Integer, n::Integer)
+    expon = [(j ≥ i) ? (j - i) : (i - j) for i in 1:m, j in 1:n]
+    function z_to_power_xp(x::Real, p::Real)
+        k = z(x, p)
+        zs = [(j ≥ i) ? conj(k) : k for i in 1:m, j in 1:n]
+        zs .^ expon
     end
     return z_to_power_xp
 end
