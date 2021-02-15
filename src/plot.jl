@@ -70,15 +70,10 @@ function plot_wigner(
     size=(700, 630),
     file_path=nothing
 )
-    get_w(x, p) = w[
-        round(Int, (x-wf.xs[1])/Float64(wf.xs.step))+1,
-        round(Int, (p-wf.ps[1])/Float64(wf.ps.step))+1
-    ]
-
     gr(size=size)
     lim = maximum(abs.(w))
     p = surface(
-		wf.xs, wf.ps, get_w,
+		wf.xs, wf.ps, w,
 		title="Wigner Function",
         xlabel="X",
         ylabel="P",
